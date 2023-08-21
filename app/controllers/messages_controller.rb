@@ -1,5 +1,5 @@
 class MessagesController < ApplicationController
-  before_action :set_room, only: %i[ new create ]
+  before_action :set_room, only: %i[ new create destroy ]
 
   def new
     @message = @room.messages.new
@@ -12,6 +12,12 @@ class MessagesController < ApplicationController
       format.turbo_stream
       format.html { redirect_to @room }
     end
+  end
+
+  def destroy
+    message = @room.messages.find(params[:id])
+
+    message.destroy
   end
 
   private
